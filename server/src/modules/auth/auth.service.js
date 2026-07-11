@@ -53,3 +53,16 @@ export const loginUser = async ({ email, password }) => {
 
   return { token, user: userObject };
 };
+
+
+export const getProfile = async(id)=>{
+
+  const user = await User.findById(id).select("-password");
+
+  if(!user){
+      throw new Error("User not found");
+  }
+
+  return user;
+
+}

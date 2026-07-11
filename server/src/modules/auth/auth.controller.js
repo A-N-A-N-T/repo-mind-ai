@@ -1,4 +1,4 @@
-import { loginUser, registerUser } from './auth.service.js';
+import { loginUser, registerUser , getProfile } from './auth.service.js';
 
 export const register = async (req, res) => {
   try {
@@ -54,3 +54,32 @@ export const login = async (req, res) => {
     });
   }
 };
+
+export const profile = async(req,res)=>{
+
+  try{
+
+      const user = await getProfile(req.user.id);
+
+      res.status(200).json({
+
+          success:true,
+
+          data:user
+
+      });
+
+  }catch(error){
+
+      res.status(404).json({
+
+          success:false,
+
+          message:error.message
+
+      });
+
+  }
+
+}
+
