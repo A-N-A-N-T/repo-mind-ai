@@ -70,3 +70,5 @@ LANGUAGE_MAPPING = {
 LLM_MODEL = "mistral-small-latest"
 
 LLM_TEMPERATURE = 0
+
+SEARCH_TOP_K = 5

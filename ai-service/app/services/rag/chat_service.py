@@ -36,8 +36,10 @@ class ChatService:
         # Call LLM
         response = self.llm.invoke(messages)
 
+
         return {
             "answer": response.content,
+            "retrieved_chunks": len(results),
             "sources": [
                 {
                     "path": result.path,

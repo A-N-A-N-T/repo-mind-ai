@@ -25,6 +25,11 @@ const repositorySchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    
+    localPath: {
+      type: String,
+      default: null,
+    },
 
     branch: {
       type: String,

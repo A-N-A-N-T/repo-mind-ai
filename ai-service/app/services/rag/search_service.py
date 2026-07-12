@@ -1,6 +1,6 @@
 from app.services.rag.vector_store_service import VectorStoreService
 from app.models.rag.search_result import SearchResult
-
+from app.core.settings import SEARCH_TOP_K
 
 class SearchService:
 
@@ -12,7 +12,7 @@ class SearchService:
         self,
         repository_path: str,
         query: str,
-        k: int = 5,
+        k: int = SEARCH_TOP_K,
     ):
 
         vector_store = self.vector_service.load(
