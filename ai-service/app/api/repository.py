@@ -59,6 +59,9 @@ async def analyze_repository(data: RepositoryRequest):
 
         print("Step 3: Completed")
 
+        print("========== NEW REQUEST ==========")
+    
+
         return {
             "success": True,
             **repository,
