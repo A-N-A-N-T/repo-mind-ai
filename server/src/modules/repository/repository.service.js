@@ -30,20 +30,24 @@ export const createRepository = async ({
   });
 
   // Call FastAPI AI Service
+  console.log("1. Repository created in MongoDB");
+
   const analysis = await analyzeRepository(
     repository._id.toString(),
     repoUrl
   );
-
+  
+  console.log("2. FastAPI Response:", analysis);
+  
   repository.localPath = analysis.localPath;
   repository.status = "completed";
   repository.lastAnalyzedAt = new Date();
-
+  
+  console.log("3. Before save");
+  
   await repository.save();
-
-  return repository;
-};
-
+  
+  console.log("4. Repository updated successfully");
 
 
 export const chatRepository = async ({
