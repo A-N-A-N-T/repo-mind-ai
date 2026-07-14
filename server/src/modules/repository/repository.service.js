@@ -51,10 +51,15 @@ export const chatRepository = async ({
   question,
   userId,
 }) => {
+  // console.log("Repository ID:", repositoryId);
+  // console.log("User ID:", userId);
+
   const repository = await Repository.findOne({
     _id: repositoryId,
     user: userId,
   });
+
+  // console.log("Repository:", repository);
 
   if(!repository){
     const error = new Error("Repository not found");
@@ -78,3 +83,51 @@ export const chatRepository = async ({
   return answer;
 
 };
+
+
+export const getRepositories = async (userId) => {
+
+  const repositories = await Repository
+      .find({
+          user: userId,
+      })
+      .sort({
+          createdAt: -1,
+      });
+
+  return repositories;
+};
+
+
+export const getRepositoryById = async (id, userId) => {
+
+  const repository = await Repository.findOne({
+      _id: id,
+      user: userId,
+  });
+
+  if (!repository) {
+      const error = new Error("Repository not found");
+      error.statusCode = 404;
+      throw error;
+  }
+
+  return repository;
+};
+
+export const deleteRepository = async (
+  id,
+  userId
+) => {
+
+  const repository = await getRepositoryById(
+      id,
+      userId
+  );
+
+  await Repository.findByIdAndDelete(id);
+
+  return repository;
+};
+
+
