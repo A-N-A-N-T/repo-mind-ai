@@ -1,5 +1,8 @@
 from langchain_huggingface import HuggingFaceEmbeddings
 from app.core.settings import EMBEDDING_MODEL
+from app.core.logger import setup_logger
+
+logger = setup_logger()
 
 class EmbeddingService:
 
@@ -10,18 +13,26 @@ class EmbeddingService:
 
         if cls._embedding_model is None:
 
-            cls._embedding_model = HuggingFaceEmbeddings(
+            try:
 
-                model_name=EMBEDDING_MODEL,
+                logger.info(f"Loading embedding model: {EMBEDDING_MODEL}")
 
-                model_kwargs={
-                    "device": "cpu"
-                },
+                cls._embedding_model = HuggingFaceEmbeddings(
+                    model_name=EMBEDDING_MODEL,
+                    model_kwargs={
+                        "device": "cpu"
+                    },
+                    encode_kwargs={
+                        "normalize_embeddings": True
+                    }
+                )
 
-                encode_kwargs={
-                    "normalize_embeddings": True
-                }
+                logger.info("Embedding model loaded successfully.")
 
-            )
+            except Exception as e:
+
+                logger.exception("Failed to load embedding model.")
+
+                raise e
 
         return cls._embedding_model
