@@ -12,7 +12,7 @@ import os
 
 load_dotenv()
 MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
-print(MISTRAL_API_KEY)if not MISTRAL_API_KEY:
+if not MISTRAL_API_KEY:
     raise RuntimeError("MISTRAL_API_KEY is not set")
 
 class LLMService:
