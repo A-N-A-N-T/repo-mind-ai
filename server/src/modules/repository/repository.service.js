@@ -49,6 +49,10 @@ export const createRepository = async ({
   
   console.log("4. Repository updated successfully");
 
+  return repository;
+};
+
+
 
 export const chatRepository = async ({
   repositoryId,
