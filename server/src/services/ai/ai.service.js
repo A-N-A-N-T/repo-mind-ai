@@ -5,15 +5,26 @@ export const analyzeRepository = async (
   repoUrl
 ) => {
 
-  const response = await fastapi.post(
-    "/repository/analyze",
-    {
-      repositoryId,
-      repoUrl,
-    }
-  );
+  try {
+    const response = await fastapi.post("/repository/analyze", {
+        repositoryId,
+        repoUrl,
+    });
 
-  return response.data;
+    console.log(response.data);
+
+    return response.data;
+
+  } catch (err) {
+
+    console.log("FASTAPI ERROR");
+
+    console.log(err.response?.status);
+
+    console.log(err.response?.data);
+
+    throw err;
+  }
 };
 
 export const chatWithRepository = async ({
