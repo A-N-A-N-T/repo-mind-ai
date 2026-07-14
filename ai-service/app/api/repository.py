@@ -39,22 +39,40 @@ class RepositoryRequest(BaseModel):
 @router.post("/analyze", response_model=RepositoryResponse)
 async def analyze_repository(data: RepositoryRequest):
 
-    repository = clone_repository(
-        data.repositoryId,
-        str(data.repoUrl)
-    )
+    try:
+        print("Step 1: Clone repository")
 
-    indexing = IndexingService()
+        repository = clone_repository(
+            data.repositoryId,
+            str(data.repoUrl)
+        )
 
-    indexing.build_index(
-        repository["localPath"]
-    )
+        print(repository)
 
-    return {
-        "success": True,
-        **repository,
-    }
+        print("Step 2: Build index")
 
+        indexing = IndexingService()
+
+        indexing.build_index(
+            repository["localPath"]
+        )
+
+        print("Step 3: Completed")
+
+        return {
+            "success": True,
+            **repository,
+        }
+
+    except Exception as e:
+        import traceback
+
+        traceback.print_exc()
+
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )
 
 
 @router.post(
